@@ -5,7 +5,8 @@ import HomeView from '../views/HomeView.vue'
 import SignUp from "@/views/SignUp.vue"
 import LogIn from "@/views/LogIn.vue"
 import Dashboard from "@/views/dasnboard/Dashboard.vue"
-import MyAccount from "@/views/dasnboard/MyAccount.vue";
+import MyAccount from "@/views/dasnboard/MyAccount.vue"
+import Departments from "@/views/dasnboard/Departments.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,14 @@ const router = createRouter({
       path: '/dashboard/my-account',
       name: 'MyAccount',
       component: MyAccount,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/departments',
+      name: 'Departments',
+      component: Departments,
       meta: {
         requireLogin: true
       }
