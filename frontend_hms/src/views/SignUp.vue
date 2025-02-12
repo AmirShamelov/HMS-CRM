@@ -69,31 +69,33 @@
             }
         },
         methods: {
-            submitForm() {
+            async submitForm() {
                 this.errors = []
                 if (this.username === '') {
-                    this.errors.push('The username is missing')
+                    this.errors.push('Добавьте ИИН')
                 }
                 if (this.first_name === '') {
-                    this.errors.push('The first_name is missing')
+                    this.errors.push('Добавьте имя')
                 }
                 if (this.last_name === '') {
-                    this.errors.push('The last_name is missing')
+                    this.errors.push('Добавьте фамилию')
                 }
                 if (this.password1 === '') {
-                    this.errors.push('The password is too short')
+                    this.errors.push('Пароль короткий')
                 }
                 if (this.password1 !== this.password2) {
-                    this.errors.push('The password are not matching')
+                    this.errors.push('Пароли не совпадают')
                 }
                 if (!this.errors.length) {
+                    this.$store.commit('setIsLoading', true)
+
                     const formData = {
                         username: this.username,
-                        password: this.password1,
                         first_name: this.first_name,
-                        last_name: this.last_name
+                        last_name: this.last_name,
+                        password: this.password1,
                     }
-                    axios
+                    await axios
                         .post('/api/v1/users/', formData)
                         .then(response => {
                             toast({
@@ -115,6 +117,7 @@
                                 this.errors.push('Something went wrong. Please try again!')
                             }
                         })
+                    this.$store.commit('setIsLoading', false)
                 }
             }
         }

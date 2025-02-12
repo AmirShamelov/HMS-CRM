@@ -1,11 +1,11 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12">
+            <div class="column is-12 is-offset-5">
                 <h1 class="title">My account</h1>
             </div>
 
-            <div class="column is-12">
+            <div class="column is-12 is-offset-5">
                 <button @click="logout()" class="button is-danger">Log out</button>
             </div>
         </div>
