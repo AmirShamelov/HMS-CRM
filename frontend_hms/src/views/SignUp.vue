@@ -8,31 +8,20 @@
                     <div class="field">
                         <label>ИИН</label>
                         <div class="control">
-                            <input type="text" name="iin" class="input" v-model="username" pattern="\d{12}" title="ИИН должен состоять из 12 цифр">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Имя</label>
-                        <div class="control">
-                            <input type="text" name="first_name" class="input" v-model="first_name">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Фамилия</label>
-                        <div class="control">
-                            <input type="text" name="last_name" class="input" v-model="last_name">
+                            <input type="text" name="username" class="input" v-model="username" placeholder="Введите иин"
+                                   pattern="\d{12}" title="ИИН должен состоять из 12 цифр">
                         </div>
                     </div>
                     <div class="field">
                         <label>Пароль</label>
                         <div class="control">
-                            <input type="password" name="password1" class="input" v-model="password1">
+                            <input type="password" name="password1" class="input" v-model="password1" placeholder="Введите пароль">
                         </div>
                     </div>
                     <div class="field">
                         <label>Повторите пароль</label>
                         <div class="control">
-                            <input type="password" name="password2" class="input" v-model="password2">
+                            <input type="password" name="password2" class="input" v-model="password2" placeholder="Повторите пароль">
                         </div>
                     </div>
 
@@ -61,8 +50,6 @@
         data() {
             return {
                 username: '',
-                first_name: '',
-                last_name: '',
                 password1: '',
                 password2: '',
                 errors: []
@@ -73,12 +60,6 @@
                 this.errors = []
                 if (this.username === '') {
                     this.errors.push('Добавьте ИИН')
-                }
-                if (this.first_name === '') {
-                    this.errors.push('Добавьте имя')
-                }
-                if (this.last_name === '') {
-                    this.errors.push('Добавьте фамилию')
                 }
                 if (this.password1 === '') {
                     this.errors.push('Пароль короткий')
@@ -91,8 +72,6 @@
 
                     const formData = {
                         username: this.username,
-                        first_name: this.first_name,
-                        last_name: this.last_name,
                         password: this.password1,
                     }
                     await axios

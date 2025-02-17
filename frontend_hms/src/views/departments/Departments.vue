@@ -1,16 +1,16 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-5">
-                <h1 class="title">Departments</h1>
+            <div class="column is-12 is-offset-6">
+                <h1 class="title">Отделения</h1>
             </div>
-            <div class="column is-12 is-offset-1">
+            <div class="column is-12 is-offset-2-desktop">
                 <table class="table is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Department</th>
-                            <th>Sub title</th>
-                            <th>Link</th>
+                            <th>Отделение</th>
+                            <th>Депаратамент</th>
+                            <th>Выбрать врача</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,7 +19,9 @@
                             v-bind:key="department.id">
                                 <td>{{ department.title }}</td>
                                 <td>{{ department.sub_title }}</td>
-                                <td>{{ department.link }}</td>
+                                <td>
+                                    <router-link :to="{ name: 'Department', params: { id: department.id }}">Врачи</router-link>
+                                </td>
                         </tr>
                     </tbody>
                 </table>

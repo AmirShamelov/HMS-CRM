@@ -8,13 +8,14 @@
                     <div class="field">
                         <label>ИИН</label>
                         <div class="control">
-                            <input type="text" name="iin" class="input" v-model="username" pattern="\d{12}" title="ИИН должен состоять из 12 цифр">
+                            <input type="text" name="username" class="input" v-model="username" placeholder="Введите иин"
+                                   pattern="\d{12}" title="ИИН должен состоять из 12 цифр">
                         </div>
                     </div>
                     <div class="field">
                         <label>Пароль</label>
                         <div class="control">
-                            <input type="password" name="password" class="input" v-model="password">
+                            <input type="password" name="password" class="input" v-model="password" placeholder="Введите пароль">
                         </div>
                     </div>
 
