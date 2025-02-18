@@ -1,6 +1,7 @@
 <template>
     <template v-if="$store.state.isAuthenticated">
         <div class="sidebar">
+            <hr>
             <h2 class="sidebar-title">Меню</h2>
             <ul class="sidebar-menu">
                 <li class="sidebar-item">
@@ -31,7 +32,7 @@ export default {
 
 <style scoped>
 .sidebar {
-    width: 250px; /* Ширина Sidebar */
+    width: 200px; /* Ширина Sidebar */
     background-color: #2c3e50;
     color: white;
     padding: 20px;

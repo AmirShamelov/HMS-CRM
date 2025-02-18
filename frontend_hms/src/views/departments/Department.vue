@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-6">
+            <div class="column is-12 is-offset-5">
                 <h1 class="title">{{ department.title }}</h1>
             </div>
         </div>

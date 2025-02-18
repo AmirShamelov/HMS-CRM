@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-6">
+            <div class="column is-12 is-offset-5">
                 <h1 class="title">Отделения</h1>
             </div>
-            <div class="column is-12 is-offset-2-desktop">
+            <div class="column is-12 is-offset-1-desktop">
                 <table class="table is-fullwidth">
                     <thead>
                         <tr>
