@@ -29,6 +29,8 @@ export default {
     beforeCreate() {
         this.$store.commit('initializeHospital')
 
+        console.log(this.$store.state.user)
+
         if (this.$store.state.token) {
             axios.defaults.headers.common['Authorization'] = "Token " + this.$store.state.token
         } else {

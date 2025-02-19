@@ -73,6 +73,17 @@
                             this.errors.push('Something went wrong. Please try again!')
                         }
                     })
+                await axios
+                    .get('/api/v1/users/me')
+                    .then(response => {
+                        this.$store.commit('setUser', {'id': response.data.id, 'username': response.data.username})
+                        localStorage.setItem('username', response.data.username)
+                        localStorage.setItem('userid', response.data.id)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
                 this.$store.commit('setIsLoading', false)
             }
         }
