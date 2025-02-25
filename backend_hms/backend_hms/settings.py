@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'department.apps.DepartmentConfig',
+    'appointment.apps.AppointmentConfig',
 ]
 
 MIDDLEWARE = [

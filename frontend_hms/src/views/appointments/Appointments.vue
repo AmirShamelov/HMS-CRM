@@ -2,26 +2,25 @@
     <div class="container">
         <div class="columns is-multiline">
             <div class="column is-12 is-offset-5">
-                <h1 class="title">Отделения</h1>
+                <h1 class="title">Записи</h1>
             </div>
             <div class="column is-12 is-offset-1-desktop">
                 <table class="table is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Отделение</th>
-                            <th>Депаратамент</th>
-                            <th>Выбрать врача</th>
+                            <th>Врач</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Детали записи</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr
-                            v-for="department in departments"
-                            v-bind:key="department.id">
-                                <td>{{ department.title }}</td>
-                                <td>{{ department.sub_title }}</td>
-                                <td>
-                                    <router-link :to="{ name: 'Department', params: { id: department.id }}">Врачи</router-link>
-                                </td>
+                            v-for="appointment in appointments"
+                            v-bind:key="appointment.id">
+                                <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.time }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -30,27 +29,28 @@
     </div>
 </template>
 
+
 <script>
 import axios from "axios";
 
 export default {
-    name: "Departments",
+    name: "Appointments",
     data() {
         return {
-            departments: []
+            appointments: []
         }
     },
     mounted() {
-        this.getDepartments()
+        this.getAppointments()
     },
     methods: {
-        async getDepartments() {
+        async getAppointments() {
             this.$store.commit('setIsLoading', true)
 
             axios
-                .get('/api/v1/departments/')
+                .get('/api/v1/appointments/')
                 .then(response => {
-                    this.departments = response.data
+                    this.appointments = response.data
                 })
                 .catch(error => {
                     console.log(error)

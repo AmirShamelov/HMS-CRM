@@ -7,7 +7,8 @@ import LogIn from "@/views/LogIn.vue"
 import Dashboard from "@/views/dasnboard/Dashboard.vue"
 import MyAccount from "@/views/dasnboard/MyAccount.vue"
 import Departments from "@/views/departments/Departments.vue"
-import Department from "@/views/departments/Department.vue";
+import Department from "@/views/departments/Department.vue"
+import Appointments from "@/views/appointments/Appointments.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,6 +56,14 @@ const router = createRouter({
       path: '/departments/:id',
       name: 'Department',
       component: Department,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/appointments',
+      name: 'Appointments',
+      component: Appointments,
       meta: {
         requireLogin: true
       }
