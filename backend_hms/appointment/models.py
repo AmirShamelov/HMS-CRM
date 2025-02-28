@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from department.models import Department
 
@@ -35,7 +36,14 @@ class Appointment(models.Model):
     def __str__(self):
         return f'Запись {self.created_by.first_name} на {self.date} в {self.get_time_display()} к {self.doctor.first_name} {self.doctor.last_name}'
 
+    def clean(self):
+        if Appointment.objects.filter(doctor=self.doctor, date=self.date, time=self.time).exists():
+            raise ValidationError('Это время уже занято другим пациентом.')
+
+
+
     class Meta:
         db_table = 'appointments'
         verbose_name = 'Запись на прием'
         verbose_name_plural = 'Записи на прием'
+        unique_together = ('doctor', 'date', 'time')

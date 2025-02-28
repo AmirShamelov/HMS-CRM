@@ -1,16 +1,16 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-5">
+            <div class="column is-12 is-offset-3">
                 <h1 class="title">Отделения</h1>
             </div>
-            <div class="column is-12 is-offset-1-desktop">
+            <div class="column is-12 is-offset-left">
                 <table class="table is-fullwidth">
                     <thead>
                         <tr>
                             <th>Отделение</th>
                             <th>Депаратамент</th>
-                            <th>Выбрать врача</th>
+                            <th>Врачи</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,7 +20,7 @@
                                 <td>{{ department.title }}</td>
                                 <td>{{ department.sub_title }}</td>
                                 <td>
-                                    <router-link :to="{ name: 'Department', params: { id: department.id }}">Врачи</router-link>
+                                    <router-link :to="{ name: 'Department', params: { id: department.id }}">Выбрать врача</router-link>
                                 </td>
                         </tr>
                     </tbody>
@@ -64,5 +64,7 @@ export default {
 
 
 <style scoped>
-
+.is-offset-left {
+  margin-left: -100px;
+}
 </style>
