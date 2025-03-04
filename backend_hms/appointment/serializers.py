@@ -20,6 +20,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
             'date',
             'time',
             'comment',
+            'conclusion',
+            'treatment',
             'doctor',
             'department'
         )

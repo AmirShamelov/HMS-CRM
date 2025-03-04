@@ -1,15 +1,18 @@
 <template>
     <div>
-        <Navbar />
-        <Sidebar />
+        <Navbar/>
+        <Sidebar/>
 
         <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
             <div class="lds-dual-ring"></div>
         </div>
 
-        <section class="section">
-            <RouterView/>
-        </section>
+        <template v-if="!$store.state.isAuthenticated">
+            <section class="section">
+                <router-view/>
+            </section>
+        </template>
+
     </div>
 
 </template>
@@ -50,6 +53,7 @@ export default {
     width: 80px;
     height: 80px;
 }
+
 .lds-dual-ring:after {
     content: " ";
     display: block;
@@ -61,6 +65,7 @@ export default {
     border-color: #ccc transparent #ccc transparent;
     animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
     0% {
         transform: rotate(0deg);
@@ -69,6 +74,7 @@ export default {
         transform: rotate(360deg);
     }
 }
+
 .is-loading-bar {
     height: 0;
     overflow: hidden;

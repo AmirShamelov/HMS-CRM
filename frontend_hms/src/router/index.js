@@ -9,6 +9,10 @@ import MyAccount from "@/views/dasnboard/MyAccount.vue"
 import Departments from "@/views/departments/Departments.vue"
 import Department from "@/views/departments/Department.vue"
 import Appointments from "@/views/appointments/Appointments.vue"
+import Appointment from "@/views/appointments/Appointment.vue"
+import Patients from "@/views/patients/Patients.vue"
+import Patient from "@/views/patients/Patient.vue"
+import PatientConclusion from "@/views/patients/PatientConclusion.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +68,38 @@ const router = createRouter({
       path: '/appointments',
       name: 'Appointments',
       component: Appointments,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/appointments/:id',
+      name: 'Appointment',
+      component: Appointment,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/patients',
+      name: 'Patients',
+      component: Patients,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/patients/:id',
+      name: 'Patient',
+      component: Patient,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/patients/:id/conclusion',
+      name: 'PatientConclusion',
+      component: PatientConclusion,
       meta: {
         requireLogin: true
       }

@@ -11,13 +11,10 @@
                         <router-link to="/departments" class="sidebar-link">Департаменты</router-link>
                     </li>
                     <li class="sidebar-item">
-                        <router-link to="/doctors" class="sidebar-link">Врачи</router-link>
+                        <router-link to="/patients" class="sidebar-link">Пациенты</router-link>
                     </li>
                     <li class="sidebar-item">
                         <router-link to="/appointments" class="sidebar-link">Записи</router-link>
-                    </li>
-                    <li class="sidebar-item">
-                        <router-link to="/profile" class="sidebar-link">Профиль</router-link>
                     </li>
                 </ul>
             </div>

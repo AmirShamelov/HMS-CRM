@@ -30,6 +30,8 @@ class Appointment(models.Model):
     date = models.DateField(verbose_name='Дата приема')
     time = models.IntegerField(choices=TIME_CHOICES, verbose_name='Время приема')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий')
+    conclusion = models.CharField(max_length=255, blank=True, null=True, verbose_name='Заключение')
+    treatment = models.TextField(blank=True, null=True, verbose_name='Лечение')
     created_by = models.ForeignKey(User, related_name='patients', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -47,7 +47,7 @@ export default {
         async getDepartments() {
             this.$store.commit('setIsLoading', true)
 
-            axios
+            await axios
                 .get('/api/v1/departments/')
                 .then(response => {
                     this.departments = response.data

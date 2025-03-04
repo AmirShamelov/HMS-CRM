@@ -21,6 +21,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(created_by=self.request.user)
 
+
     @action(detail=False, methods=['get'])
     def available_dates(self, request):
         doctor_id = request.query_params.get('doctor_id')
@@ -33,7 +34,9 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             end_date = start_date + timedelta(days=7)
             all_dates = [start_date + timedelta(days=i) for i in range((end_date - start_date).days + 1)]
 
-            return Response([d.isoformat() for d in all_dates])
+            filtered_dates = [d for d in all_dates if d.weekday() < 5]
+
+            return Response([d.isoformat() for d in filtered_dates])
         return Response()
 
 
@@ -47,4 +50,15 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             available_times = [time for time in Appointment.TIME_CHOICES if time[0] not in booked_times]
             return Response(available_times)
         return Response([])
+
+class PatientViewSet(viewsets.ModelViewSet):
+    serializer_class = AppointmentSerializer
+    queryset = Appointment.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(doctor=self.request.user)
+
+
+
+
 

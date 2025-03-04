@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'djoser',
     'department.apps.DepartmentConfig',
     'appointment.apps.AppointmentConfig',
+    'doctor.apps.DoctorConfig',
 ]
 
 MIDDLEWARE = [
