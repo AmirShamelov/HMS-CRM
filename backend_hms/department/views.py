@@ -15,4 +15,11 @@ class DepartmentList(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.all()
 
+@api_view(['GET'])
+def get_my_department(request):
+    department = Department.objects.filter(doctors__in=[request.user]).first()
+    serializer = DepartmentSerializer(department)
+
+    return Response(serializer.data)
+
 

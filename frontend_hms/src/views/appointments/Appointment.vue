@@ -3,9 +3,7 @@
         <div class="columns is-multiline">
             <div class="column is-12">
                 <template v-if="appointment.doctor">
-                    <h1 class="title">Запись к врачу {{ appointment.doctor.first_name }} {{
-                            appointment.doctor.last_name
-                        }}</h1>
+                    <h1 class="title">Запись к врачу {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</h1>
                 </template>
             </div>
 

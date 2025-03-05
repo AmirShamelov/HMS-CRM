@@ -62,7 +62,6 @@
                         this.$store.commit('setToken', token)
                         axios.defaults.headers.common['Authorization'] = 'Token ' + token
                         localStorage.setItem('token', token)
-                        this.$router.push('/dashboard/my-account')
                     })
                     .catch(error => {
                         if (error.response) {
@@ -79,6 +78,16 @@
                         this.$store.commit('setUser', {'id': response.data.id, 'username': response.data.username})
                         localStorage.setItem('username', response.data.username)
                         localStorage.setItem('userid', response.data.id)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+                await axios
+                    .get('/api/v1/departments/get_my_department/')
+                    .then(response => {
+                        this.$store.commit('setDepartment', {'id': response.data.id, 'title': response.data.title})
+                        this.$router.push('/dashboard/my-account')
                     })
                     .catch(error => {
                         console.log(error)

@@ -8,6 +8,10 @@ export default createStore({
     user: {
       id: 0,
       username: ''
+    },
+    department: {
+      id: 0,
+      title: ''
     }
   },
   mutations: {
@@ -17,11 +21,15 @@ export default createStore({
         state.isAuthenticated = true
         state.user.username = localStorage.getItem('username')
         state.user.id = localStorage.getItem('userid')
+        state.department.id = localStorage.getItem('department_id')
+        state.department.title = localStorage.getItem('department_title')
       } else {
         state.token = ''
         state.isAuthenticated = false
         state.user.id = 0
         state.user.username = ''
+        state.department.id = 0
+        state.department.title = ''
       }
     },
     setIsLoading(state, status) {
@@ -37,6 +45,12 @@ export default createStore({
     },
     setUser(state, user) {
       state.user = user
+    },
+    setDepartment(state, department) {
+      state.department = department
+
+      localStorage.setItem('department_id', department.id)
+      localStorage.setItem('department_title', department.title)
     }
   },
   actions: {},
