@@ -10,13 +10,16 @@
                     <li class="sidebar-item">
                         <router-link to="/departments" class="sidebar-link">Департаменты</router-link>
                     </li>
-                    <template v-if="$store.state.department.id">
+                    <template v-if="$store.state.department.title">
                         <li class="sidebar-item">
                             <router-link to="/patients" class="sidebar-link">Пациенты</router-link>
                         </li>
                     </template>
                     <li class="sidebar-item">
                         <router-link to="/appointments" class="sidebar-link">Записи</router-link>
+                    </li>
+                    <li class="sidebar-item">
+                        <router-link to="/doctors" class="sidebar-link">Врачи</router-link>
                     </li>
                 </ul>
             </div>
