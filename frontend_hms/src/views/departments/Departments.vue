@@ -3,6 +3,17 @@
         <div class="columns is-multiline">
             <div class="column is-12 is-offset-3">
                 <h1 class="title">Отделения</h1>
+
+                <form @submit.prevent="getDepartments">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input type="text" class="input" v-model="query">
+                        </div>
+                        <div class="control">
+                            <button class="button is-success">Найти</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="column is-12 is-offset-left">
                 <table class="table is-fullwidth">
@@ -37,7 +48,8 @@ export default {
     name: "Departments",
     data() {
         return {
-            departments: []
+            departments: [],
+            query: '',
         }
     },
     mounted() {
@@ -48,7 +60,7 @@ export default {
             this.$store.commit('setIsLoading', true)
 
             await axios
-                .get('/api/v1/departments/')
+                .get(`/api/v1/departments/?search=${this.query}`)
                 .then(response => {
                     this.departments = response.data
                 })

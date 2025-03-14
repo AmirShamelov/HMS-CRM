@@ -2,7 +2,18 @@
     <div class="container">
         <div class="columns is-multiline">
             <div class="column is-12 is-offset-3">
-                <h1 class="title">Записи</h1>
+                <h1 class="title">Записи пациентов</h1>
+
+                <form @submit.prevent="getPatients">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input type="text" class="input" v-model="query">
+                        </div>
+                        <div class="control">
+                            <button class="button is-success" @click="search">Найти</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="column is-12 is-offset-left">
                 <table class="table is-fullwidth">
@@ -27,6 +38,10 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="buttons">
+                    <button class="button is-light" @click="goToPreviousPage()" v-if="showPreviousButton">Назад</button>
+                    <button class="button is-light" @click="goToNextPage()" v-if="showNextButton">Вперед</button>
+                </div>
             </div>
         </div>
     </div>
@@ -39,26 +54,55 @@ export default {
     name: "Patients",
     data() {
         return {
-            patients: []
+            patients: [],
+            showNextButton: false,
+            showPreviousButton: false,
+            currentPage: 1,
+            query: '',
         }
     },
     mounted() {
         this.getPatients()
     },
     methods: {
+        goToNextPage() {
+            this.currentPage += 1
+            this.getPatients()
+        },
+
+        goToPreviousPage() {
+            this.currentPage -= 1
+            this.getPatients()
+        },
+
         async getPatients() {
             this.$store.commit('setIsLoading', true)
 
+            this.showNextButton = false
+            this.showPreviousButton = false
+
             await axios
-                .get('/api/v1/patients/')
+                .get(`/api/v1/patients/?page=${this.currentPage}&search=${this.query}`)
                 .then(response => {
-                    this.patients = response.data
+                    this.patients = response.data.results
+
+                    if (response.data.next) {
+                        this.showNextButton = true
+                    }
+
+                    if (response.data.previous) {
+                        this.showPreviousButton = true
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 })
 
             this.$store.commit('setIsLoading', false)
+        },
+        search() {
+            this.currentPage = 1;
+            this.getPatients()
         },
         getTimeLabel(timeValue) {
             const timeOptions = [

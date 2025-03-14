@@ -1,6 +1,20 @@
 <template>
     <div class="container">
-        <h1 class="title is-offset-left">Наши врачи</h1>
+        <div class="column is-12 is-offset-left">
+            <h1 class="title">Наши врачи</h1>
+
+            <form @submit.prevent="getDoctors">
+                <div class="field has-addons">
+                    <div class="control">
+                        <input type="text" class="input" v-model="query">
+                    </div>
+                    <div class="control">
+                        <button class="button is-success" @click="search">Найти</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="columns is-multiline is-offset-left">
             <div
                 v-for="doctor in doctors"
@@ -30,11 +44,17 @@
                             <p><strong>Отделение:</strong> {{ doctor.department.title }}</p>
                         </div>
                         <div class="buttons">
-                            <router-link :to="{ name: 'Department', params: {id: doctor.department.id}}" class="button is-success">Записаться на прием</router-link>
+                            <router-link :to="{ name: 'Department', params: {id: doctor.department.id}}"
+                                         class="button is-success">Записаться на прием
+                            </router-link>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="buttons">
+            <button class="button is-light" @click="goToPreviousPage()" v-if="showPreviousButton">Назад</button>
+            <button class="button is-light" @click="goToNextPage()" v-if="showNextButton">Вперед</button>
         </div>
     </div>
 </template>
@@ -48,27 +68,54 @@ export default {
     data() {
         return {
             doctors: [],
+            showNextButton: false,
+            showPreviousButton: false,
+            currentPage: 1,
+            query: '',
         }
     },
     mounted() {
         this.getDoctors()
     },
     methods: {
+        goToNextPage() {
+            this.currentPage += 1
+            this.getDoctors()
+        },
+        goToPreviousPage() {
+            this.currentPage -= 1
+            this.getDoctors()
+        },
         async getDoctors() {
             this.$store.commit('setIsLoading', true)
 
+            this.showNextButton = false
+            this.showPreviousButton = false
+
             await axios
-                .get('/api/v1/doctors/')
+                .get(`/api/v1/doctors/?page=${this.currentPage}&search=${this.query}`)
                 .then(response => {
                     console.log(response.data)
-                    this.doctors = response.data
+                    this.doctors = response.data.results
+
+                    if (response.data.next) {
+                        this.showNextButton = true
+                    }
+
+                    if (response.data.previous) {
+                        this.showPreviousButton = true
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 })
 
             this.$store.commit('setIsLoading', false)
-        }
+        },
+        search() {
+          this.currentPage = 1;
+          this.getDoctors()
+        },
     }
 }
 </script>

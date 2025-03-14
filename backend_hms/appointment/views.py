@@ -1,11 +1,13 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, filters, pagination
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 
 from .models import Appointment
 
 from .serializers import AppointmentSerializer
+
 
 class AppointmentViewSet(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
@@ -51,9 +53,15 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             return Response(available_times)
         return Response([])
 
+class PatientPagination(PageNumberPagination):
+    page_size = 4
+
 class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
-    queryset = Appointment.objects.all()
+    queryset = Appointment.objects.all().order_by('-id')
+    pagination_class = PatientPagination
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('patient_name', 'patient_iin')
 
     def get_queryset(self):
         return self.queryset.filter(doctor=self.request.user)

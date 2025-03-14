@@ -36,7 +36,7 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Запись {self.created_by.first_name} на {self.date} в {self.get_time_display()} к {self.doctor.first_name} {self.doctor.last_name}'
+        return f'Запись {self.patient_name} на {self.date} в {self.get_time_display()} к {self.doctor.first_name} {self.doctor.last_name}'
 
     def clean(self):
         if Appointment.objects.filter(doctor=self.doctor, date=self.date, time=self.time).exists():
