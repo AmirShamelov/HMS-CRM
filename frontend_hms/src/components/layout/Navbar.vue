@@ -2,6 +2,7 @@
     <nav class="navbar is-dark">
         <div class="navbar-brand">
             <router-link to="/" class="navbar-item">
+                <font-awesome-icon icon="fa-solid fa-hospital" />
                 <strong>Astana Hospital</strong>
             </router-link>
         </div>
@@ -15,7 +16,10 @@
                         </template>
 
                         <template v-else>
-                            <router-link to="/dashboard/my-account" class="button is-info">My account</router-link>
+                            <router-link to="/dashboard/my-account" class="button is-info">
+                                <font-awesome-icon icon="fa-solid fa-user" />
+                                My account
+                            </router-link>
                         </template>
                     </div>
                 </div>
@@ -25,8 +29,11 @@
 </template>
 
 <script>
+    import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
     export default {
-        name: 'Navbar'
+        name: 'Navbar',
+        components: {FontAwesomeIcon}
     }
 </script>
 

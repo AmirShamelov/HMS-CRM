@@ -13,7 +13,7 @@ class DoctorList(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     pagination_class = DoctorPagination
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('position',)
+    search_fields = ('position', 'doctor__first_name', 'doctor__last_name')
 
     def get_queryset(self):
         return self.queryset.all()

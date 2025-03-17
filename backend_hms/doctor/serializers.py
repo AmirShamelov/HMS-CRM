@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
 from .models import Doctor
-from department.serializers import DepartmentSerializer
+from department.serializers import DepartmentSerializer, DoctorSerializer
 
 
 class DoctorListSerializer(serializers.ModelSerializer):
+    doctor = DoctorSerializer(read_only=True)
     department = DepartmentSerializer(read_only=True)
     full_name = serializers.SerializerMethodField()
 
@@ -12,6 +13,7 @@ class DoctorListSerializer(serializers.ModelSerializer):
         model = Doctor
         fields = (
             'id',
+            'doctor',
             'full_name',
             'department',
             'education',
