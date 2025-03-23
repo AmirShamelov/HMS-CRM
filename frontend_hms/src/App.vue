@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="app-container">
+
         <Navbar/>
         <Sidebar/>
 
@@ -31,9 +32,6 @@ export default {
     },
     beforeCreate() {
         this.$store.commit('initializeHospital')
-
-        console.log(this.$store.state.user)
-        console.log(this.$store.state.department)
 
         if (this.$store.state.token) {
             axios.defaults.headers.common['Authorization'] = "Token " + this.$store.state.token

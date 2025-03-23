@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets, filters, pagination
-from rest_framework.decorators import action
+from rest_framework import viewsets, filters, pagination, status
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
@@ -52,6 +52,13 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             available_times = [time for time in Appointment.TIME_CHOICES if time[0] not in booked_times]
             return Response(available_times)
         return Response([])
+
+@api_view(['POST'])
+def delete_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(pk=appointment_id)
+    appointment.delete()
+
+    return Response({'message': 'The appointment was deleted'})
 
 class PatientPagination(PageNumberPagination):
     page_size = 4

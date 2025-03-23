@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-3">
-                <h1 class="title">Записи</h1>
+            <div class="column is-12 is-offset-5">
+                <h1 class="appointments-title">Записи</h1>
             </div>
-            <div class="column is-12 is-offset-left">
+            <div class="column is-12">
                 <h2 class="subtitle">Активные записи</h2>
                 <table class="table is-fullwidth">
                     <thead>
@@ -137,8 +137,9 @@ export default {
 
 
 <style scoped>
-.is-offset-left {
-    margin-left: -100px;
+.appointments-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
 }
 
 .has-text-grey {

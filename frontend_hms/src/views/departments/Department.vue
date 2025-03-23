@@ -1,11 +1,11 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-12 is-offset-3">
+            <div class="column is-12 is-offset-4">
                 <h1 class="title">{{ department.title }}</h1>
             </div>
 
-            <div class="column is-12 is-offset-left">
+            <div class="column is-12">
                 <table class="table is-fullwidth">
                     <thead>
                     <tr>
@@ -76,7 +76,7 @@
                 </form>
             </div>
         </div>
-        <div class="column is-12 is-offset-3">
+        <div class="column is-12 is-offset-4">
             <router-link to="/departments" class="back-link">Назад к списку отделений</router-link>
         </div>
     </div>
@@ -131,8 +131,8 @@ export default {
             this.loadAvailableDates()
         },
         closeAppointmentModal() {
-            this.isModalOpen = false;  // Закрываем модальное окно
-            this.selectedDoctor = null;  // Сбрасываем выбранного врача
+            this.isModalOpen = false;
+            this.selectedDoctor = null;
             this.resetAppointmentForm();
         },
         resetAppointmentForm() {
@@ -210,9 +210,6 @@ export default {
 
 
 <style scoped>
-.is-offset-left {
-    margin-left: -100px;
-}
 
 .modal-overlay {
     position: fixed;

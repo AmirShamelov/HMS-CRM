@@ -2,7 +2,7 @@
     <nav class="navbar is-dark">
         <div class="navbar-brand">
             <router-link to="/" class="navbar-item">
-                <font-awesome-icon icon="fa-solid fa-hospital" />
+                <font-awesome-icon class="navbar-icon" icon="fa-solid fa-hospital" />
                 <strong>Astana Hospital</strong>
             </router-link>
         </div>
@@ -18,7 +18,7 @@
                         <template v-else>
                             <router-link to="/dashboard/my-account" class="button is-info">
                                 <font-awesome-icon icon="fa-solid fa-user" />
-                                My account
+                                Мой профиль
                             </router-link>
                         </template>
                     </div>
@@ -38,5 +38,7 @@
 </script>
 
 <style scoped>
-
+.navbar-icon {
+    font-size: 40px;
+}
 </style>

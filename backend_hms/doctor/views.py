@@ -6,11 +6,11 @@ from .models import Doctor
 from .serializers import DoctorListSerializer
 
 class DoctorPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 6
 
 class DoctorList(viewsets.ModelViewSet):
     serializer_class = DoctorListSerializer
-    queryset = Doctor.objects.all()
+    queryset = Doctor.objects.all().order_by('id')
     pagination_class = DoctorPagination
     filter_backends = (filters.SearchFilter,)
     search_fields = ('position', 'doctor__first_name', 'doctor__last_name')

@@ -74,7 +74,7 @@ export default {
 .main-content {
     flex-grow: 1; /* Основная часть занимает оставшееся пространство */
     padding: 20px;
-    margin-left: 250px; /* Отступ, равный ширине Sidebar */
+    margin-left: 50px; /* Отступ, равный ширине Sidebar */
 }
 
 .sidebar-title {

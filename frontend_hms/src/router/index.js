@@ -13,7 +13,8 @@ import Appointment from "@/views/appointments/Appointment.vue"
 import Patients from "@/views/patients/Patients.vue"
 import Patient from "@/views/patients/Patient.vue"
 import PatientConclusion from "@/views/patients/PatientConclusion.vue"
-import Doctors from "@/views/doctors/Doctors.vue";
+import Doctors from "@/views/doctors/Doctors.vue"
+import Doctor from "@/views/doctors/Doctor.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -109,9 +110,11 @@ const router = createRouter({
       path: '/doctors',
       name: 'Doctors',
       component: Doctors,
-      meta: {
-        requireLogin: true
-      }
+    },
+    {
+      path: '/doctors/:id',
+      name: 'Doctor',
+      component: Doctor,
     },
   ],
 })

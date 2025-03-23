@@ -3,7 +3,10 @@
         <div class="columns is-multiline">
             <div class="column is-12">
                 <template v-if="appointment.doctor">
-                    <h1 class="title">Запись к врачу {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</h1>
+                    <h1 class="title">
+                        <font-awesome-icon class="sidebar-icon" icon="fa-solid fa-calendar-check"/>
+                        Запись к врачу {{ appointment.doctor.first_name }} {{appointment.doctor.last_name }}
+                    </h1>
                 </template>
             </div>
 
@@ -30,9 +33,21 @@
                         <p>Врач еще не добавил заключение...</p>
                     </template>
                 </div>
+
+                <div class="buttons">
+                    <button class="button is-danger" @click="openAppointmentModal">Отменить запись</button>
+                </div>
+
+                <div v-if="isModalOpen" class="modal-overlay">
+                    <div class="modal-content">
+                        <h3>Вы уверены что хотите отменить запись?</h3>
+                        <div class="buttons">
+                            <button type="submit" class="button is-success" @click="deleteAppointment">Да</button>
+                            <button type="button" class="button is-danger" @click="closeAppointmentModal">Нет</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -44,13 +59,32 @@ export default {
     name: "Appointment",
     data() {
         return {
-            appointment: {}
+            appointment: {},
+            isModalOpen: false,
         }
     },
     mounted() {
         this.getAppointment()
     },
     methods: {
+        async deleteAppointment() {
+            this.$store.commit('setIsLoading', true)
+
+            const appointmentID = this.$route.params.id
+
+            await axios
+                .post(`/api/v1/appointments/delete_appointment/${appointmentID}/`)
+                .then(response => {
+                    console.log(response.data)
+
+                    this.$router.push('/appointments')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+            this.$store.commit('setIsLoading', false)
+        },
         async getAppointment() {
             this.$store.commit('setIsLoading', true)
 
@@ -66,6 +100,12 @@ export default {
                 })
 
             this.$store.commit('setIsLoading', false)
+        },
+        openAppointmentModal() {
+            this.isModalOpen = true;
+        },
+        closeAppointmentModal() {
+            this.isModalOpen = false;
         },
         getTimeLabel(timeValue) {
             const timeOptions = [
@@ -94,5 +134,30 @@ export default {
 
 
 <style scoped>
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
 
 </style>
