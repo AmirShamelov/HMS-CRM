@@ -286,10 +286,16 @@ export default {
     flex-grow: 1;
 }
 
-.image img {
-    object-fit: cover;
-    width: 100%;
-    height: auto;
+.image.mb-4 {
+  height: 500px;
+  overflow: hidden;
+}
+
+.image.mb-4 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .modal-overlay {

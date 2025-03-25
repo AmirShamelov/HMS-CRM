@@ -19,6 +19,9 @@ class DoctorListSerializer(serializers.ModelSerializer):
             'education',
             'position',
             'get_image',
+            'description',
+            'email',
+            'phone'
         )
 
     def get_full_name(self, obj):

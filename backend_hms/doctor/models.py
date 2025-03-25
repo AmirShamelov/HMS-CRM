@@ -8,6 +8,9 @@ class Doctor(models.Model):
     doctor = models.ForeignKey(User, related_name='doctors', verbose_name='Врач', on_delete=models.CASCADE)
     education = models.CharField(max_length=50)
     position = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=12)
     department = models.ForeignKey(Department, related_name='staff', null=True, blank=True, on_delete=models.SET_NULL)
     image = models.ImageField(upload_to='doctors_images', blank=True, null=True, verbose_name='Фото')
 

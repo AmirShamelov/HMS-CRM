@@ -5,7 +5,7 @@
                 <h1 class="appointments-title">Записи</h1>
             </div>
             <div class="column is-12">
-                <h2 class="subtitle">Активные записи</h2>
+                <h2 class="active-subtitle">Активные записи</h2>
                 <table class="table is-fullwidth">
                     <thead>
                     <tr>
@@ -28,6 +28,8 @@
                     </tr>
                     </tbody>
                 </table>
+
+
 
                 <h2 class="subtitle">Неактивные записи</h2>
                 <table class="table is-fullwidth">
@@ -140,6 +142,20 @@ export default {
 .appointments-title {
     font-size: 2.5rem;
     margin-bottom: 40px;
+}
+
+.active-subtitle {
+    color: #42b983;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+}
+
+.table {
+    margin-bottom: 50px;
 }
 
 .has-text-grey {
