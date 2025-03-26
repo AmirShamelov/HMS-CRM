@@ -16,12 +16,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faUser, faUserDoctor, faHouseMedical, faHospitalUser, faHospital, faCalendarCheck, faHouse,
   faBuilding, faUsers, faHeartPulse, faHandsHoldingChild, faUserNurse, faTooth, faGraduationCap,
-  faFileLines, faAddressCard, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons"
+  faFileLines, faAddressCard, faEnvelope, faPhone, faCommentDots } from "@fortawesome/free-solid-svg-icons"
 
 /* add icons to the library */
 library.add(faUser, faUserDoctor, faHouseMedical, faHospitalUser, faHospital, faCalendarCheck, faHouse, faBuilding,
     faUsers, faHeartPulse, faHandsHoldingChild, faUserNurse, faTooth, faGraduationCap,
-  faFileLines, faAddressCard, faEnvelope, faPhone )
+  faFileLines, faAddressCard, faEnvelope, faPhone, faCommentDots )
 
 const app = createApp(App).use(store)
 

@@ -5,6 +5,8 @@ class Department(models.Model):
 
     class Meta:
         db_table = 'departments'
+        verbose_name = 'Отделение'
+        verbose_name_plural = 'Отделения'
 
     title = models.CharField(max_length=40)
     doctors = models.ManyToManyField(User, related_name='departments')
@@ -14,3 +16,4 @@ class Department(models.Model):
 
     def __str__(self):
         return self.title
+

@@ -36,7 +36,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
 
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'department.apps.DepartmentConfig',
     'appointment.apps.AppointmentConfig',
     'doctor.apps.DoctorConfig',
+    'review.apps.ReviewConfig',
 ]
 
 MIDDLEWARE = [
