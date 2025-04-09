@@ -6,7 +6,7 @@
             <form @submit.prevent="getDoctors">
                 <div class="field has-addons">
                     <div class="control">
-                        <input type="text" placeholder="Введите фамилию врача" class="input" v-model="query">
+                        <input type="text" placeholder="Введите фамилию врача или отделение" class="input" v-model="query">
                     </div>
                     <div class="control">
                         <button class="button is-success" @click="search">Найти</button>
@@ -44,7 +44,7 @@
                             <p><strong>Отделение:</strong> {{ doctor.department.title }}</p>
                         </div>
                         <div class="buttons">
-                            <button @click="openAppointmentModal(doctor.doctor, doctor.department)" class="button is-success">
+                            <button @click="openAppointmentModal(doctor)" class="button is-success">
                                 Записатья на прием
                             </button>
 
@@ -63,7 +63,7 @@
 
         <div v-if="isModalOpen" class="modal-overlay">
             <div class="modal-content">
-                <h3>Запись на прием к {{ selectedDoctor.first_name }} {{ selectedDoctor.last_name }}</h3>
+                <h3>Запись на прием к {{ selectedDoctor.full_name }}</h3>
                 <form @submit.prevent="submitAppointmentForm">
                     <div class="field">
                         <label>Ваше имя</label>
@@ -123,7 +123,6 @@ export default {
             query: '',
             isModalOpen: false,
             selectedDoctor: null,
-            department: null,
             appointmentForm: {
                 patient_name: '',
                 patient_iin: '',
@@ -164,16 +163,14 @@ export default {
 
             this.$store.commit('setIsLoading', false)
         },
-        openAppointmentModal(doctor, department) {
+        openAppointmentModal(doctor) {
             this.selectedDoctor = doctor;
-            this.department = department;
             this.isModalOpen = true;
             this.loadAvailableDates()
         },
         closeAppointmentModal() {
             this.isModalOpen = false;
             this.selectedDoctor = null;
-            this.department = null
             this.resetAppointmentForm();
         },
         resetAppointmentForm() {
@@ -227,7 +224,7 @@ export default {
             this.$store.commit('setIsLoading', true)
 
             const appointment = {
-                department: this.department.id,
+                department: this.selectedDoctor.department.id,
                 doctor_id: this.selectedDoctor.id,
                 ...this.appointmentForm,
             }
@@ -287,15 +284,15 @@ export default {
 }
 
 .image.mb-4 {
-  height: 500px;
-  overflow: hidden;
+    height: 500px;
+    overflow: hidden;
 }
 
 .image.mb-4 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .modal-overlay {
@@ -344,18 +341,6 @@ export default {
     justify-content: space-between;
 }
 
-.submit-button {
-    background-color: #42b983;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submit-button:hover {
-    background-color: #369c6e;
-}
 
 .cancel-button {
     background-color: #ff3860;
@@ -370,13 +355,5 @@ export default {
     background-color: #e03157;
 }
 
-.appointment-cell {
-    color: #369c6e;
-    cursor: pointer;
-}
-
-.appointment-cell:hover {
-    text-decoration: underline;
-}
 
 </style>

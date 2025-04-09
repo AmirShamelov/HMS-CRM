@@ -4,7 +4,7 @@
         <form @submit.prevent="getDepartments">
             <div class="field has-addons">
                 <div class="control">
-                    <input type="text" class="input" v-model="query">
+                    <input type="text" placeholder="Введите название отделения" class="input" v-model="query">
                 </div>
                 <div class="control">
                     <button class="button is-success">Найти</button>
@@ -22,7 +22,7 @@
                 >
                     <font-awesome-icon :icon="department.link" class="department-icon"/>
                     <h2 class="department-name">{{ department.title }}</h2>
-                    <p class="department-description">{{ department.sub_title }}</p>
+                    <p class="department-description">Подробнее</p>
                 </div>
             </div>
         </div>
@@ -122,5 +122,6 @@ hr {
     color: #666;
     line-height: 1.5;
 }
+
 
 </style>

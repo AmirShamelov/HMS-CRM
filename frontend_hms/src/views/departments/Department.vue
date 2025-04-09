@@ -1,40 +1,48 @@
 <template>
-    <div class="container">
-        <div class="columns is-multiline">
-            <div class="column is-12 is-offset-4">
-                <h1 class="title">{{ department.title }}</h1>
+    <div class="department-container">
+        <div class="department-card">
+            <div class="department-header">
+                <h1 class="department-title">{{ department.title }}</h1>
+                <div class="title-decoration"></div>
             </div>
 
-            <div class="column is-12">
-                <table class="table is-fullwidth">
-                    <thead>
-                    <tr>
-                        <th>ИИН врача</th>
-                        <th>Имя Фамилия</th>
-                        <th>Запись</th>
-                    </tr>
-                    </thead>
+            <div class="department-content">
+                <div class="description-wrapper">
+                    <p class="department-description">{{ department.sub_title }}</p>
+                </div>
+            </div>
 
-                    <tbody>
-                    <tr
-                        v-for="doctor in department.doctors"
-                        :key="doctor.id" :value="doctor.id"
-                    >
-                        <td>{{ doctor.username }}</td>
-                        <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+            <button @click="goToAppointment" class="appointment-btn">
+                <span>Записаться на приём</span>
+                <font-awesome-icon icon="fa-solid fa-arrow-right"/>
+            </button>
+        </div>
 
-                        <td @click="openAppointmentModal(doctor)" class="appointment-cell">
-                            Записаться на прием
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="doctors-section">
+            <h2 class="doctors-title">Наши специалисты</h2>
+
+            <div class="doctors-grid">
+                <div v-for="doctor in filteredDoctors" :key="doctor.id" class="doctor-card">
+                    <router-link :to="{ name: 'Doctor', params: {id: doctor.id}}">
+                        <div class="doctor-photo-container">
+                            <img :src="doctor.get_image" :alt="doctor.full_name" class="doctor-photo">
+                        </div>
+                    </router-link>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">{{ doctor.full_name }}</h3>
+                        <p class="doctor-position">{{ doctor.position }}</p>
+                        <button @click="openAppointmentModal(doctor)" class="doctor-appointment-btn">
+                            Записаться
+                            <font-awesome-icon icon="fa-solid fa-calendar-check"/>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div v-if="isModalOpen" class="modal-overlay">
             <div class="modal-content">
-                <h3>Запись на прием к {{ selectedDoctor.first_name }} {{ selectedDoctor.last_name }}</h3>
+                <h3>Запись на прием к {{ selectedDoctor.full_name }}</h3>
                 <form @submit.prevent="submitAppointmentForm">
                     <div class="field">
                         <label>Ваше имя</label>
@@ -76,9 +84,6 @@
                 </form>
             </div>
         </div>
-        <div class="column is-12 is-offset-4">
-            <router-link to="/departments" class="back-link">Назад к списку отделений</router-link>
-        </div>
     </div>
 </template>
 
@@ -89,9 +94,9 @@ export default {
     name: "Department",
     data() {
         return {
-            department: {
-                doctors: []
-            },
+            department: {},
+            doctors: [],
+            filteredDoctors: [],
             isModalOpen: false,
             selectedDoctor: null,
             appointmentForm: {
@@ -107,6 +112,7 @@ export default {
     },
     mounted() {
         this.getDepartment()
+        this.getDoctors()
     },
     methods: {
         async getDepartment() {
@@ -124,6 +130,30 @@ export default {
                 })
 
             this.$store.commit('setIsLoading', false)
+        },
+        async getDoctors() {
+            this.$store.commit('setIsLoading', true)
+
+            const DepartmentID = Number(this.$route.params.id)
+
+            await axios
+                .get('/api/v1/doctors/')
+                .then(response => {
+                    this.doctors = response.data.results
+                    this.filteredDoctors = this.doctors.filter(doctor => {
+                        return doctor.department.id === DepartmentID
+                    })
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+            this.$store.commit('setIsLoading', false)
+        },
+
+        goToAppointment() {
+            this.$router.push({name: "Doctors"})
         },
         openAppointmentModal(doctor) {
             this.selectedDoctor = doctor;
@@ -186,7 +216,7 @@ export default {
             this.$store.commit('setIsLoading', true)
 
             const appointment = {
-                department: this.department.id,
+                department: this.selectedDoctor.department.id,
                 doctor_id: this.selectedDoctor.id,
                 ...this.appointmentForm,
             }
@@ -204,12 +234,184 @@ export default {
 
             this.$store.commit('setIsLoading', false)
         },
+
     }
 }
 </script>
 
 
 <style scoped>
+/* Основные стили контейнера */
+
+.department-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+    background-color: #F0F8FF;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+/* Карточка отделения */
+.department-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(30, 144, 255, 0.1);
+    margin-bottom: 3rem;
+    border: 1px solid rgba(30, 144, 255, 0.1);
+}
+
+/* Заголовок отделения */
+.department-header {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.department-title {
+    font-size: 2rem;
+    color: #1e90ff;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+
+/* Описание отделения */
+.department-description {
+    color: #555;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Кнопка записи */
+.appointment-btn {
+    background: #1e90ff;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.appointment-btn:hover {
+    background: #187bcd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+}
+
+/* Секция врачей */
+.doctors-section {
+    margin-top: 2rem;
+}
+
+.doctors-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.doctors-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+}
+
+/* Сетка врачей */
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+/* Карточка врача */
+.doctor-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(30, 144, 255, 0.1);
+}
+
+.doctor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.2);
+}
+
+/* Фото врача */
+.doctor-photo-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.doctor-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.doctor-card:hover .doctor-photo {
+    transform: scale(1.05);
+}
+
+/* Информация о враче */
+.doctor-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.doctor-name {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.doctor-position {
+    color: #1e90ff;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+/* Кнопка записи к врачу */
+.doctor-appointment-btn {
+    background: #1e90ff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.doctor-appointment-btn:hover {
+    background: #187bcd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+}
+
 
 .modal-overlay {
     position: fixed;
@@ -257,18 +459,6 @@ export default {
     justify-content: space-between;
 }
 
-.submit-button {
-    background-color: #42b983;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submit-button:hover {
-    background-color: #369c6e;
-}
 
 .cancel-button {
     background-color: #ff3860;
@@ -281,14 +471,5 @@ export default {
 
 .cancel-button:hover {
     background-color: #e03157;
-}
-
-.appointment-cell {
-    color: #369c6e;
-    cursor: pointer;
-}
-
-.appointment-cell:hover {
-    text-decoration: underline;
 }
 </style>

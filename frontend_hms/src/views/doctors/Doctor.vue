@@ -207,8 +207,6 @@ export default {
             await axios
                 .post('/api/v1/reviews/', review)
                 .then(response => {
-                    console.log(response)
-
                     location.reload()
                 })
                 .catch(error => {

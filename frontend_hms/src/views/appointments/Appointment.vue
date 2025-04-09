@@ -5,7 +5,7 @@
                 <template v-if="appointment.doctor">
                     <h1 class="title">
                         <font-awesome-icon class="sidebar-icon" icon="fa-solid fa-calendar-check"/>
-                        Запись к врачу {{ appointment.doctor.first_name }} {{appointment.doctor.last_name }}
+                        Запись к врачу {{ appointment.doctor.full_name }}
                     </h1>
                 </template>
             </div>

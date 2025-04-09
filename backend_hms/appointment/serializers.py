@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
 from .models import Appointment
-from department.serializers import DoctorSerializer
+from doctor.serializers import DoctorListSerializer
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    doctor = DoctorSerializer(read_only=True)
+    doctor = DoctorListSerializer(read_only=True)
 
     class Meta:
         model = Appointment

@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets, filters, pagination, status
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Appointment
+from doctor.models import Doctor
 
 from .serializers import AppointmentSerializer
 
@@ -16,9 +16,9 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         doctor_id = self.request.data['doctor_id']
 
-        user = User.objects.get(pk=doctor_id)
+        doctor = Doctor.objects.get(pk=doctor_id)
 
-        serializer.save(doctor=user, created_by=self.request.user)
+        serializer.save(doctor=doctor, created_by=self.request.user)
 
     def get_queryset(self):
         return self.queryset.filter(created_by=self.request.user)
@@ -32,7 +32,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             from datetime import date, timedelta
             from time import time
 
-            start_date = date.fromtimestamp(time())
+            start_date = date.fromtimestamp(time()) + timedelta(days=1)
             end_date = start_date + timedelta(days=7)
             all_dates = [start_date + timedelta(days=i) for i in range((end_date - start_date).days + 1)]
 
@@ -71,7 +71,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     search_fields = ('patient_name', 'patient_iin')
 
     def get_queryset(self):
-        return self.queryset.filter(doctor=self.request.user)
+        return self.queryset.filter(doctor__doctor=self.request.user)
 
 
 

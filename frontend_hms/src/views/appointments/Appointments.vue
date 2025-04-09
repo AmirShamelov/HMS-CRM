@@ -19,7 +19,7 @@
                     <tr
                         v-for="appointment in activeAppointments"
                         v-bind:key="appointment.id">
-                        <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                        <td>{{ appointment.doctor.full_name }}</td>
                         <td>{{ appointment.date }}</td>
                         <td>{{ getTimeLabel(appointment.time) }}</td>
                         <td>
@@ -47,7 +47,7 @@
                         v-bind:key="appointment.id"
                         class="has-text-grey"
                     >
-                        <td class="has-text-grey">{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                        <td class="has-text-grey">{{ appointment.doctor.full_name }}</td>
                         <td class="has-text-grey">{{ appointment.date }}</td>
                         <td class="has-text-grey">{{ getTimeLabel(appointment.time) }}</td>
                         <td>
