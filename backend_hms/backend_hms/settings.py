@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'appointment.apps.AppointmentConfig',
     'doctor.apps.DoctorConfig',
     'review.apps.ReviewConfig',
+    'user_profile.apps.UserProfileConfig',
 ]
 
 MIDDLEWARE = [

@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
-from social_core.pipeline import user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,6 +12,7 @@ urlpatterns = [
     path('api/v1/', include('appointment.urls')),
     path('api/v1/', include('doctor.urls')),
     path('api/v1/', include('review.urls')),
+    path('api/v1/', include('user_profile.urls')),
 ]
 
 if settings.DEBUG:

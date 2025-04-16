@@ -1,18 +1,11 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 
 from .models import Department
-
-User = get_user_model()
-
-class DoctorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'first_name', 'last_name']
+from user_profile.serializers import UserSerializer
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
-    doctors = DoctorSerializer(many=True, read_only=True)
+    doctors = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = Department

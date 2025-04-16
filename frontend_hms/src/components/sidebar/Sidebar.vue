@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
     name: 'Sidebar',
-    components: {FontAwesomeIcon}
 }
 </script>
 

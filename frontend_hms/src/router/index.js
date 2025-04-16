@@ -13,6 +13,7 @@ import Appointment from "@/views/appointments/Appointment.vue"
 import Patients from "@/views/patients/Patients.vue"
 import Patient from "@/views/patients/Patient.vue"
 import PatientConclusion from "@/views/patients/PatientConclusion.vue"
+import PatientMedicalStatus from "@/views/patients/PatientMedicalStatus.vue"
 import Doctors from "@/views/doctors/Doctors.vue"
 import Doctor from "@/views/doctors/Doctor.vue";
 
@@ -102,6 +103,14 @@ const router = createRouter({
       path: '/patients/:id/conclusion',
       name: 'PatientConclusion',
       component: PatientConclusion,
+      meta: {
+        requireLogin: true
+      }
+    },
+    {
+      path: '/patients/:id/medical-status',
+      name: 'PatientMedicalStatus',
+      component: PatientMedicalStatus,
       meta: {
         requireLogin: true
       }
