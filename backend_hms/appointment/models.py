@@ -26,15 +26,15 @@ class Appointment(models.Model):
 
     patient_name = models.CharField(max_length=100, verbose_name='Имя пациента')
     patient_iin = models.CharField(max_length=12, verbose_name='ИИН пациента')
-    department = models.ForeignKey(Department, related_name='appointments', on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, related_name='appointments', verbose_name='Отделение', on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, related_name='appointments', verbose_name='Врач', on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Дата приема')
     time = models.IntegerField(choices=TIME_CHOICES, verbose_name='Время приема')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий')
     conclusion = models.CharField(max_length=255, blank=True, null=True, verbose_name='Заключение')
     treatment = models.TextField(blank=True, null=True, verbose_name='Лечение')
-    created_by = models.ForeignKey(User, related_name='patients', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, related_name='patients', verbose_name='Создана пациентом', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return f'Запись {self.patient_name} на {self.date} в {self.get_time_display()} к {self.doctor}'

@@ -8,8 +8,8 @@ class Review(models.Model):
     phone_number = models.CharField(max_length=12, verbose_name='Номер телефона')
     date = models.DateField(verbose_name='Дата приема')
     review = models.TextField(verbose_name='Отзыв')
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    doctor = models.ForeignKey(Doctor, verbose_name='Врач', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return f'Отзыв {self.first_name} {self.last_name}'
